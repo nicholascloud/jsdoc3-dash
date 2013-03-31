@@ -13,6 +13,10 @@ This will pull the current `master` branch from the jsdoc3 repository into a `.t
 
 ## Installing
 
+Make sure Dash is installed and double-click on `build/jsdoc3.docset` in Finder.
+
+Alternatively:
+
 1. Open Dash
 2. Go to `Dash -> Preferences -> Docsets` and click the `+` icon (Add Docset) in the lower-left of the dialog
 3. Navigate to the project `build` directory
