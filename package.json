@@ -2,7 +2,10 @@
   "name": "jsdoc3-dash",
   "version": "0.0.1",
   "author": "Nicholas Cloud",
-  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicholascloud/jsdoc3-dash"
+  },
   "dependencies": {
     "async": "0.2.6",
     "sqlite3": "2.1.7",
@@ -14,6 +17,7 @@
     "jake": "0.5.8"
   },
   "scripts": {
+    "start": "jake build",
     "prepublish": "jake build"
   }
 }
