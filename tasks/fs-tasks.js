@@ -26,7 +26,7 @@ namespace('fs', function () {
   }
 
   function dest(file) {
-    return path.join(config.DOCUMENTS_DIR, file);
+    return path.join(config.HTML_DIR, file);
   }
 
   function copyDocsetFiles(files, callback) {
@@ -42,7 +42,7 @@ namespace('fs', function () {
     return callback(null);
   }
 
-  task('copy-docset', {async: true}, function () {
+  task('copy-docset', function () {
     console.log('Copying docset files...');
     fs.readdir(config.TMP_DIR, function (err, files) {
       if (err) {
@@ -55,19 +55,19 @@ namespace('fs', function () {
         return complete(err);
       });
     });
-  });
+  }, {async: true});
 
-  task('copy-plist', {async: true}, function () {
+  task('copy-plist', function () {
     console.log('Copying plist file...');
     ncp(config.PLIST_SRC_PATH, config.PLIST_DEST_PATH, function (err) {
       complete(err);
     });
-  });
+  }, {async: true});
 
   task('copy-icon', function () {
     console.log('Copying icon file...');
     ncp(config.ICON_SRC_PATH, config.ICON_DEST_PATH, function (err) {
       complete(err);
     });
-  });
+  }, {async: true});
 });

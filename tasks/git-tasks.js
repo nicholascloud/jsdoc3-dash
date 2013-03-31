@@ -15,5 +15,5 @@ namespace('git', function () {
       }
       complete(err);
     });
-  });
+  }, {async: true});
 });

@@ -10,7 +10,7 @@ var COMPRESS_CMD = "tar --exclude='.DS_Store' -cvzf " +
   config.BUILD_DIR + " " +
   config.DOCSET_NAME;
 
-task('archive', {async: true}, function () {
+task('archive', function () {
   console.log('Archiving docset...');
   console.log('  >', COMPRESS_CMD);
   exec(COMPRESS_CMD, function (err) {
@@ -18,5 +18,5 @@ task('archive', {async: true}, function () {
       console.error(err);
     }
     return complete(err);
-  });
+  }, {async: true});
 });

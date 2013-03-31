@@ -18,7 +18,7 @@ function removeBuildDir(callback) {
 }
 
 desc('cleans build output');
-task('clean', {async: true}, function () {
+task('clean', function () {
   console.log('Cleaning build artifacts...');
   async.parallel([
     removeTempDir,
@@ -29,17 +29,18 @@ task('clean', {async: true}, function () {
     }
     complete(err);
   });
-});
+}, {async: true});
 
 function createTempDir(callback) {
   mkdirp(config.TMP_DIR, callback);
 }
 
 function createBuildDir(callback) {
-  mkdirp(config.DOCUMENTS_DIR, callback);
+  //make path all the way to the HTML dir
+  mkdirp(config.HTML_DIR, callback);
 }
 
-task('scaffold', {async: true}, function () {
+task('scaffold', function () {
   console.log('Scaffolding build directories...');
   async.parallel([
     createTempDir,
@@ -50,7 +51,7 @@ task('scaffold', {async: true}, function () {
     }
     complete(err);
   });
-});
+}, {async: true});
 
 var buildDeps = [
   'clean',

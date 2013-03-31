@@ -12,12 +12,12 @@ var sqlite3 = require('sqlite3').verbose(),
 var INSERT_QUERY = 'INSERT INTO searchIndex (id, name, type, path) VALUES (?, ?, ?, ?)';
 
 namespace('db', function () {
-  task('clean', {async: true}, function () {
+  task('clean', function () {
     console.log('Cleaning database...');
     rimraf(config.DB_DEST_PATH, function (err) {
       complete(err);
     });
-  });
+  }, {async: true});
 
   function openConnection(callback) {
     console.log('  > opening connection...');
@@ -38,14 +38,14 @@ namespace('db', function () {
   }
 
   function _makeDashRecord(file) {
-    var relativePath = path.relative(config.RESOURCE_DIR, path.join(config.DOCUMENTS_DIR, file));
+    var relativePath = path.relative(config.DOCUMENTS_DIR, path.join(config.HTML_DIR, file));
     return new DashRecord(relativePath, file);
   }
 
   function createRecords(db, callback) {
     console.log('  > creating records...');
     var dashRecords = [];
-    fs.readdir(config.DOCUMENTS_DIR, function (err, files) {
+    fs.readdir(config.HTML_DIR, function (err, files) {
       if (err) {
         return callback(err);
       }
@@ -57,8 +57,8 @@ namespace('db', function () {
 
   function writeRecords(db, dashRecords, callback) {
     console.log('  > writing records...', dashRecords.length);
-    var inserts = [];
 
+    var inserts = [];
     dashRecords.map(function (record) {
       return record.toJSON();
     }).forEach(function (json) {
@@ -75,27 +75,18 @@ namespace('db', function () {
     });
   }
 
-  function closeConnection(db, callback) {
-    console.log('  > closing connection...');
-    if (db && db.hasOwnProperty('close')) {
-      db.close();
-    }
-    callback(null);
-  }
-
-  task('create', ['db:clean'], {async: true}, function () {
+  task('create', ['db:clean'], function () {
     console.log('Creating database...');
     async.waterfall([
       openConnection,
       createTable,
       createRecords,
-      writeRecords,
-      closeConnection
+      writeRecords
     ], function (err) {
       if (err) {
         console.error(err);
       }
       complete(err);
     });
-  });
+  }, {async: true});
 });

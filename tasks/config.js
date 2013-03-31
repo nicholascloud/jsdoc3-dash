@@ -20,11 +20,11 @@ var DOCSET_DIR = path.join(BUILD_DIR, DOCSET_NAME);
 var CONTENTS_DIR = path.join(DOCSET_DIR, 'Contents');
 var RESOURCES_DIR = path.join(CONTENTS_DIR, 'Resources');
 var DOCUMENTS_DIR = path.join(RESOURCES_DIR, 'Documents');
+var HTML_DIR = path.join(DOCUMENTS_DIR, 'jsdoc3');
 
 //source paths
 var PLIST_SRC_PATH = path.join(ASSETS_DIR, PLIST_NAME);
 var ICON_SRC_PATH = path.join(ASSETS_DIR, ICON_NAME);
-var ARCHIVE_SRC_PATH = DOCSET_DIR;
 
 //destionation paths
 var PLIST_DEST_PATH = path.join(CONTENTS_DIR, PLIST_NAME);
@@ -48,11 +48,11 @@ module.exports = {
   CONTENTS_DIR: CONTENTS_DIR,
   RESOURCE_DIR: RESOURCES_DIR,
   DOCUMENTS_DIR: DOCUMENTS_DIR,
+  HTML_DIR: HTML_DIR,
 
   //source paths
   PLIST_SRC_PATH: PLIST_SRC_PATH,
   ICON_SRC_PATH: ICON_SRC_PATH,
-  ARCHIVE_SRC_PATH: ARCHIVE_SRC_PATH,
 
   //dest paths
   DB_DEST_PATH: DB_DEST_PATH,
