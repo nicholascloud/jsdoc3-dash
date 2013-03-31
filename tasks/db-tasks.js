@@ -28,8 +28,9 @@ namespace('db', function () {
 
   function createTable(db, callback) {
     console.log('  > creating table...');
-    db.run('CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT)');
-    callback(null, db);
+    db.run('CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT)', function (err) {
+      callback(err, db);
+    });
   }
 
   function _isHtmlFile(file) {
@@ -37,7 +38,7 @@ namespace('db', function () {
   }
 
   function _makeDashRecord(file) {
-    var relativePath = path.relative(config.RESOURCE_DIR, path.join(config.DOCUMENTS_DIR, file));
+//    var relativePath = path.relative(config.RESOURCE_DIR, path.join(config.DOCUMENTS_DIR, file));
     return new DashRecord(file, file);
   }
 
@@ -56,12 +57,22 @@ namespace('db', function () {
 
   function writeRecords(db, dashRecords, callback) {
     console.log('  > writing records...', dashRecords.length);
+    var inserts = [];
+
     dashRecords.map(function (record) {
       return record.toJSON();
     }).forEach(function (json) {
-      db.run(INSERT_QUERY, [json.id, json.name, json.type, json.path]);
+      inserts.push(function (asyncCallback) {
+        db.run(INSERT_QUERY, [json.id, json.name, json.type, json.path], asyncCallback);
+      });
     });
-    callback(null, db);
+
+    async.series(inserts, function (err) {
+      if (err) {
+        console.error(err);
+      }
+      callback(err, db);
+    });
   }
 
   function closeConnection(db, callback) {
