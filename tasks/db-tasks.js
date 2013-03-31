@@ -38,8 +38,8 @@ namespace('db', function () {
   }
 
   function _makeDashRecord(file) {
-//    var relativePath = path.relative(config.RESOURCE_DIR, path.join(config.DOCUMENTS_DIR, file));
-    return new DashRecord(file, file);
+    var relativePath = path.relative(config.RESOURCE_DIR, path.join(config.DOCUMENTS_DIR, file));
+    return new DashRecord(relativePath, file);
   }
 
   function createRecords(db, callback) {
