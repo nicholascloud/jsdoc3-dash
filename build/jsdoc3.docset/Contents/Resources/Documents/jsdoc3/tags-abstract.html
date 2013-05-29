@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="description" content="Describe a symbol."><title>Use JSDoc: @desc</title>
+	<meta name="description" content="This member must be implemented (or overridden) by the inheritor."><title>Use JSDoc: @abstract</title>
 	
 	<link rel="stylesheet" href="lib/prettify.css" />
 	<script src="lib/prettify.js"></script>
@@ -174,75 +174,60 @@
 	</nav>
 	
 	<article>
-	<h1>@desc</h1>
+	<h1>@abstract</h1>
 
 <h3>Synonyms</h3>
 <ul>
- <li>@description</li>
+ <li>@virtual</li>
 </ul>
-
-<h3>Syntax</h3>
-
-<code>@desc &lt;some description></code>
 
 <h3>Overview</h3>
 
 <p>
-The @desc tag allows you to provide a general description of the symbol you are documenting. The
-description may include HTML markup. It may also include Markdown formatting if the
-<a href="plugins-markdown.html">Markdown plugin</a> is enabled.
+The @abstract tag identifies members that must be implemented (or overridden) by objects that
+inherit the member.
 </p>
 
-<h3>Examples</h3>
-
-<p>
-If you describe a symbol at the very beginning of a JSDoc comment, before using any block tags, you
-may omit the @desc tag.
-</p>
+<h3>Example</h3>
 
 <dl class="example">
-<dt>Describing a symbol without the @desc tag</dt>
+<dt>Parent class with abstract method, and child class that implements the method</dt>
 <dd>
 <pre class="prettyprint lang-js">
 /**
- * Add two numbers.
- * @param {number} a
- * @param {number} b
- * @returns {number}
+ * Generic dairy product.
+ * @constructor
  */
-function add(a, b) {
-    return a + b;
-}
+function DairyProduct() {}
 
-</pre>
-</dd>
-</dl><p>
-By using the @desc tag, you can place the description anywhere in the JSDoc comment.
-</p>
-
-<dl class="example">
-<dt>Describing a symbol with the @desc tag</dt>
-<dd>
-<pre class="prettyprint lang-js">
 /**
- * @param {number} a
- * @param {number} b
- * @returns {number}
- * @desc Add two numbers.
+ * Check whether the dairy product is solid at room temperature.
+ * @abstract
+ * @return {boolean}
  */
-function add(a, b) {
-    return a + b;
-}
+DairyProduct.prototype.isSolid = function() {
+    throw new Error('must be implemented by subclass!');	
+};
+
+
+/**
+ * Cool, refreshing milk.
+ * @constructor
+ * @augments DairyProduct
+ */
+function Milk() {}
+
+/**
+ * Check whether milk is solid at room temperature.
+ * @return {boolean} Always returns false.
+ */
+Milk.prototype.isSolid = function() {
+    return false;
+};
 
 </pre>
 </dd>
-</dl><h3>See Also</h3>
-
-<ul>
-    <li><a href="tags-classdesc.html">@classdesc</a></li>
-    <li><a href="tags-summary.html">@summary</a></li>
-</ul>
-
+</dl>
     </article>
     
     <footer>

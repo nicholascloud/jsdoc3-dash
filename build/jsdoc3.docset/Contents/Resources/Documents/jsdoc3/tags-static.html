@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="description" content="Describe a symbol."><title>Use JSDoc: @desc</title>
+	<meta name="description" content="Document a static member."><title>Use JSDoc: @static</title>
 	
 	<link rel="stylesheet" href="lib/prettify.css" />
 	<script src="lib/prettify.js"></script>
@@ -174,73 +174,63 @@
 	</nav>
 	
 	<article>
-	<h1>@desc</h1>
-
-<h3>Synonyms</h3>
-<ul>
- <li>@description</li>
-</ul>
-
-<h3>Syntax</h3>
-
-<code>@desc &lt;some description></code>
+	<h1>@static</h1>
 
 <h3>Overview</h3>
+<p>
+The @static tag indicates that a symbol is contained within a parent and can be accessed without
+instantiating the parent.
+</p>
 
 <p>
-The @desc tag allows you to provide a general description of the symbol you are documenting. The
-description may include HTML markup. It may also include Markdown formatting if the
-<a href="plugins-markdown.html">Markdown plugin</a> is enabled.
+Using the @static tag will override a symbol's default scope, with one exception: Symbols in global
+scope will remain global.
 </p>
 
 <h3>Examples</h3>
 
 <p>
-If you describe a symbol at the very beginning of a JSDoc comment, before using any block tags, you
-may omit the @desc tag.
+The following example has the same effect as writing "@function MyNamespace.myFunction" and omitting
+the @memberof and @static tags:
 </p>
 
 <dl class="example">
-<dt>Describing a symbol without the @desc tag</dt>
+<dt>Using @static in a virtual comment</dt>
 <dd>
 <pre class="prettyprint lang-js">
+/** @namespace MyNamespace */
+
 /**
- * Add two numbers.
- * @param {number} a
- * @param {number} b
- * @returns {number}
+ * @function myFunction
+ * @memberof MyNamespace
+ * @static
  */
-function add(a, b) {
-    return a + b;
-}
 
 </pre>
 </dd>
-</dl><p>
-By using the @desc tag, you can place the description anywhere in the JSDoc comment.
-</p>
+</dl>The following example forces a module's inner member to be documented as a static member:
 
 <dl class="example">
-<dt>Describing a symbol with the @desc tag</dt>
+<dt>Using @static to override the default scope</dt>
 <dd>
 <pre class="prettyprint lang-js">
+/** @module Rollerskate */
+
 /**
- * @param {number} a
- * @param {number} b
- * @returns {number}
- * @desc Add two numbers.
+ * The 'wheel' variable is documented as Rollerskate.wheel
+ * rather than Rollerskate~wheel.
+ * @static
  */
-function add(a, b) {
-    return a + b;
-}
+var wheel = 1;
 
 </pre>
 </dd>
 </dl><h3>See Also</h3>
 
 <ul>
-    <li><a href="tags-classdesc.html">@classdesc</a></li>
-    <li><a href="tags-summary.html">@summary</a></li>
+    <li><a href="tags-inner.html">@inner</a>, which marks a symbol as an inner member (Parent~Child).</li>
+    <li><a href="tags-instance.html">@instance</a>, which marks a symbol as an instance member (Parent#Child).</li>
+    <li><a href="tags-global.html">@global</a>, which marks a symbol as global (Child).</li>
 </ul>
 
     </article>
