@@ -1,6 +1,6 @@
 {
   "name": "jsdoc3-dash",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Nicholas Cloud",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "jake": "latest"
   },
   "scripts": {
-    "start": "jake build",
-    "prepublish": "jake build"
+    "start": "./node_modules/.bin/jake build",
+    "prepublish": "./node_modules/.bin/jake build"
   }
 }
