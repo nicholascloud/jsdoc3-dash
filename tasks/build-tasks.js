@@ -54,6 +54,7 @@ task('scaffold', function () {
 }, {async: true});
 
 var buildDeps = [
+  'git:check',
   'clean',
   'scaffold',
   'git:clone',

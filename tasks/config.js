@@ -9,6 +9,7 @@ var DB_NAME = 'docSet.dsidx';
 var PLIST_NAME = 'Info.plist';
 var ICON_NAME = 'icon.png';
 var ARCHIVE_NAME = 'jsdoc3.tgz';
+var MASTER_HASH_FILE = path.join(ROOT, 'master.hash');
 
 var TMP_DIR = path.join(ROOT, '.tmp');
 var BUILD_DIR = path.join(ROOT, 'build');
@@ -26,7 +27,7 @@ var HTML_DIR = path.join(DOCUMENTS_DIR, 'jsdoc3');
 var PLIST_SRC_PATH = path.join(ASSETS_DIR, PLIST_NAME);
 var ICON_SRC_PATH = path.join(ASSETS_DIR, ICON_NAME);
 
-//destionation paths
+//destination paths
 var PLIST_DEST_PATH = path.join(CONTENTS_DIR, PLIST_NAME);
 var ICON_DEST_PATH = path.join(DOCSET_DIR, ICON_NAME);
 var DB_DEST_PATH = path.join(RESOURCES_DIR, DB_NAME);
@@ -34,6 +35,7 @@ var ARCHIVE_DEST_PATH = path.join(BUILD_DIR, ARCHIVE_NAME);
 
 module.exports = {
   REPO_URL: REPO_URL,
+  MASTER_HASH_FILE: MASTER_HASH_FILE,
 
   //names
   DOCSET_NAME: DOCSET_NAME,
