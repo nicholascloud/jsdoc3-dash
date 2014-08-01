@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="This member is meant to be protected.">
-  <title>Use JSDoc: @protected</title>
+  <meta name="description" content="This function is intended to be called with the &quot;new&quot; keyword.">
+  <title>Use JSDoc: @class</title>
   <link rel="stylesheet" href="styles/usejsdoc.css">
   <link rel="stylesheet" href="styles/prettify.css">
   <link rel="stylesheet" href="styles/css3-github-ribbon.css">
@@ -20,9 +20,15 @@
     <a href="./index.html">@use JSDoc</a>
   </header>
   <article>
-    <h1>@protected</h1>
+    <h1>@class</h1>
     <h2>Table of Contents</h2>
     <ul>
+      <li>
+        <a href="#synonyms">Synonyms</a>
+      </li>
+      <li>
+        <a href="#syntax">Syntax</a>
+      </li>
       <li>
         <a href="#overview">Overview</a>
       </li>
@@ -33,39 +39,31 @@
         <a href="#related-links">Related Links</a>
       </li>
     </ul>
+    <h2 id="synonyms">Synonyms</h2>
+    <p>
+      @constructor
+    </p>
+    <h2 id="syntax">Syntax</h2>
+    <p><code>@class [&lt;type&gt; &lt;name&gt;]</code>
+    </p>
     <h2 id="overview">Overview</h2>
-    <p>This tag marks a doclet as protected.</p>
-    <p>Note that &quot;@protected&quot; is equivalent to &quot;@access protected&quot;. See <a href="tags-access.html">@access</a> for details.</p>
+    <p>The @class tag marks a function as being a constructor, meant to be called with the new keyword to return an instance.</p>
     <h2 id="examples">Examples</h2>
     <figure>
-      <figcaption>Using the @protected tag</figcaption><pre class="prettyprint lang-js"><code>/** @constructor */
-function Thingy() {
-    /** @protected */
-    this._bar = 1;
+      <figcaption>A function that constructs Person instances.</figcaption><pre class="prettyprint lang-js"><code>/**
+ * Creates a new Person.
+ * @class
+ */
+function Person() {
 }
+
+var p = new Person();
 </code></pre>
     </figure>
     <h2 id="related-links">Related Links</h2>
-    <ul>
-      <li>
-        <a href="tags-access.html">@access</a>
-      </li>
-      <li>
-        <a href="tags-global.html">@global</a>
-      </li>
-      <li>
-        <a href="tags-instance.html">@instance</a>
-      </li>
-      <li>
-        <a href="tags-private.html">@private</a>
-      </li>
-      <li>
-        <a href="tags-public.html">@public</a>
-      </li>
-      <li>
-        <a href="tags-static.html">@static</a>
-      </li>
-    </ul>
+    <p>
+      <a href="tags-constructs.html">@constructs</a>
+    </p>
   </article>
   <footer>
     <img alt="Creative Commons License" class="license-badge" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
