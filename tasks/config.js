@@ -10,6 +10,7 @@ var PLIST_NAME = 'Info.plist';
 var ICON_NAME = 'icon.png';
 var ARCHIVE_NAME = 'jsdoc3.tgz';
 var MASTER_HASH_FILE = path.join(ROOT, 'master.hash');
+var FEED_FILE = path.join(ROOT, 'feeds', 'jsdoc3.xml');
 
 var TMP_DIR = path.join(ROOT, '.tmp');
 var BUILD_DIR = path.join(ROOT, 'build');
@@ -36,6 +37,7 @@ var ARCHIVE_DEST_PATH = path.join(BUILD_DIR, ARCHIVE_NAME);
 module.exports = {
   REPO_URL: REPO_URL,
   MASTER_HASH_FILE: MASTER_HASH_FILE,
+  FEED_FILE: FEED_FILE,
 
   //names
   DOCSET_NAME: DOCSET_NAME,
