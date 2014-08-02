@@ -5,3 +5,4 @@ require('./db-tasks');
 require('./build-tasks');
 require('./archive-tasks');
 require('./feed-tasks');
+require('./version-tasks');

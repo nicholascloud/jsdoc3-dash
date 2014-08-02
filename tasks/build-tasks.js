@@ -53,12 +53,17 @@ var buildDeps = [
   'clean',
   'scaffold',
   'git:clone',
+  'version:increment',
   'fs:copy-docset',
   'fs:copy-plist',
   'fs:copy-icon',
+  'fs:copy-readme',
+  'fs:copy-json',
   'db:create',
   'archive',
-  'feed:incversion'
+  'feed:incversion',
+
+  'version:commit'
 ];
 
 desc('builds the docset');

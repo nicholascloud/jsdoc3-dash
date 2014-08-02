@@ -2,9 +2,9 @@
 var xml2js = require('xml2js'),
   fs = require('fs'),
   path = require('path'),
-  domain = require('domain'),
   async = require('async'),
-  semver = require('semver'),
+  ncp = require('ncp').ncp,
+  version = require('./version'),
   config = require('./config');
 
 var parser = new xml2js.Parser(),
@@ -17,7 +17,7 @@ function readFeed(cb) {
     url: [ 'https://raw.github.com/nicholascloud/jsdoc3-dash/master/build/jsdoc3.tgz' ] }
   }
   */
-  fs.readFile(config.FEED_FILE, function (err, buffer) {
+  fs.readFile(config.FEED_SRC_PATH, function (err, buffer) {
     if (err) {
       return cb(err);
     }
@@ -48,64 +48,51 @@ function writeFeed(json, cb) {
   if (err) {
     return cb(err);
   }
-  fs.writeFile(config.FEED_FILE, xml, function (err) {
+  fs.writeFile(config.FEED_DEST_PATH, xml, function (err) {
     cb(err);
   });
 }
 
 function incVersion(json, cb) {
-  var version, err;
-  try {
-    version = json.entry.version[0];
-    version = semver.inc(version, 'patch');
-    json.entry.version[0] = version;
-  } catch (e) {
-    err = e;
-  }
-  cb(err, json);
-}
-
-function archiveFeed(json, cb) {
-  var version, err;
-  try {
-    version = json.entry.version[0];
-  } catch (e) {
-    err = e;
-  }
-  if (err) {
-    return cb(err);
-  }
-  var fileName = ['jsdoc3-', version, '.xml'].join('');
-  var feedDir = path.dirname(config.FEED_FILE);
-  var archivePath = path.join(feedDir, fileName);
-  console.log(archivePath);
-
-  var d = domain.create();
-  d.on('error', cb);
-  d.run(function () {
-    fs.createReadStream(config.FEED_FILE)
-      .pipe(fs.createWriteStream(archivePath))
-      .on('close', cb);
+  version.current(function (err, ver) {
+    if (err) {
+      return cb(err);
+    }
+    try {
+      json.entry.version[0] = ver;
+    } catch (e) {
+      err = e;
+    }
+    cb(err, json);
   });
 }
 
 namespace('feed', function () {
-  task('incversion', ['feed:archive'], {async: true}, function () {
+  task('archive', ['version:increment'], {async: true}, function () {
+    console.log('archiving feed...');
+    if (!fs.existsSync(config.FEED_DEST_PATH)) {
+      return complete();
+    }
+    version.previous(function (err, ver) {
+      if (err) {
+        return complete(err);
+      }
+
+      var fileName = ['jsdoc3-', ver, '.xml'].join('');
+      var archivePath = path.join(config.FEED_DIR, fileName);
+
+      ncp(config.FEED_DEST_PATH, archivePath, function (err) {
+        complete(err);
+      });
+    });
+  });
+
+  task('incversion', ['feed:archive', 'version:increment'], {async: true}, function () {
     console.log('incrementing feed version...');
     async.waterfall([
       readFeed,
       incVersion,
       writeFeed
-    ], function (err) {
-      complete(err);
-    });
-  });
-
-  task('archive', {async: true}, function () {
-    console.log('archiving feed...');
-    async.waterfall([
-      readFeed,
-      archiveFeed
     ], function (err) {
       complete(err);
     });

@@ -1,0 +1,11 @@
+{
+  "name": "jsdoc3 Docset",
+  "version": "0.0.0",
+  "archive": "jsdoc3.tgz",
+  "author": {
+    "name": "Nicholas Cloud",
+    "link": "https://twitter.com/nicholascloud"
+  },
+  "aliases": ["jsdoc"],
+  "specific_versions": []
+}
