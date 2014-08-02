@@ -1,14 +1,13 @@
 'use strict';
-
 var dashMap = {
-  "about": "Guide",
-  "howto": "Guide",
-  "plugins": "Guide",
-  "tags": "Tag",
-  "index": "Guide"
+  about: 'Guide',
+  howto: 'Guide',
+  plugins: 'Guide',
+  tags: 'Tag',
+  index: 'Guide'
 };
 
-var DEFAULT_TYPE = "Guide";
+var DEFAULT_TYPE = 'Guide';
 
 module.exports = {
   /**

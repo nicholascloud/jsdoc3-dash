@@ -1,10 +1,5 @@
-/*global namespace, task, desc, complete*/
 'use strict';
 var config = require('./config'),
-  fs = require('fs'),
-  path = require('path'),
-  exec = require('child_process').exec,
-  sql = require('sqlite3').verbose(),
   async = require('async'),
   rimraf = require('rimraf'),
   mkdirp = require('mkdirp');
@@ -62,7 +57,8 @@ var buildDeps = [
   'fs:copy-plist',
   'fs:copy-icon',
   'db:create',
-  'archive'
+  'archive',
+  'feed:incversion'
 ];
 
 desc('builds the docset');

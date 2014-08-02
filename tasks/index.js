@@ -1,3 +1,4 @@
+'use strict';
 require('./fs-tasks');
 require('./git-tasks');
 require('./db-tasks');

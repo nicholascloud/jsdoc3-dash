@@ -1,4 +1,3 @@
-/*global namespace, task, desc, complete, fail*/
 'use strict';
 var exec = require('child_process').exec,
   config = require('./config'),

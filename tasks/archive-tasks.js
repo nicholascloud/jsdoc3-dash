@@ -1,14 +1,13 @@
-/*global namespace, task, desc, complete*/
 'use strict';
 var config = require('./config'),
-  fs = require('fs'),
-  path = require('path'),
   exec = require('child_process').exec;
 
+/*jshint quotmark:false*/
 var COMPRESS_CMD = "tar --exclude='.DS_Store' -cvzf " +
   config.ARCHIVE_DEST_PATH + " -C " +
   config.BUILD_DIR + " " +
   config.DOCSET_NAME;
+/*jshint quotmark:true*/
 
 task('archive', function () {
   console.log('Archiving docset...');

@@ -1,6 +1,4 @@
-/*global namespace, task, desc, complete*/
 'use strict';
-
 var sqlite3 = require('sqlite3').verbose(),
   rimraf = require('rimraf'),
   async = require('async'),

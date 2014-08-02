@@ -1,4 +1,3 @@
-/*global namespace, task, desc, complete*/
 'use strict';
 require('./tasks');
 var exec = require('child_process').exec;

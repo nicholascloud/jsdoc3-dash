@@ -1,6 +1,4 @@
-/*global namespace, task, desc, complete*/
 'use strict';
-
 var fs = require('fs'),
   path = require('path'),
   os = require('os'),
