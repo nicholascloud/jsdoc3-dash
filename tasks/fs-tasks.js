@@ -138,7 +138,7 @@ namespace('fs', function () {
     function writeJSON(json, cb) {
       var err;
       try {
-        var content = JSON.stringify(json);
+        var content = JSON.stringify(json, null, '  ');
       } catch (e) {
         err = e;
       }
