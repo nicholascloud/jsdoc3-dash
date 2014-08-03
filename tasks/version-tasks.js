@@ -2,17 +2,30 @@
 var version = require('./version');
 
 namespace('version', function () {
-  task('increment', {async: true}, function () {
+  /**
+   * Increments the version number used for the build
+   */
+  task('increment', function () {
     console.log('incrementing version...');
-    version.inc('patch', function (err) {
-      complete(err);
+    version.inc(version.PATCH, function (err, newVersion) {
+      if (err) {
+        return fail(err);
+      }
+      console.info('  > new version: %s', newVersion);
+      complete();
     });
-  });
+  }, {async: true});
 
-  task('commit', {async: true}, function () {
+  /**
+   * Commits the version number by writing it to /version.semver
+   */
+  task('commit', function () {
     console.log('committing version...');
     version.commit(function (err) {
-      complete(err);
+      if (err) {
+        return fail(err);
+      }
+      complete();
     });
-  });
+  }, {async: true});
 });

@@ -4,47 +4,52 @@ var config = require('./config'),
   rimraf = require('rimraf'),
   mkdirp = require('mkdirp');
 
-function removeTempDir(callback) {
-  rimraf(config.BUILD_DIR, callback);
-}
-
-function removeBuildDir(callback) {
-  rimraf(config.TMP_DIR, callback);
-}
-
 desc('cleans build output');
 task('clean', function () {
-  console.log('Cleaning build artifacts...');
+  console.log('cleaning build artifacts...');
+
+  function removeTempDir(callback) {
+    rimraf(config.BUILD_DIR, callback);
+  }
+
+  function removeBuildDir(callback) {
+    rimraf(config.TMP_DIR, callback);
+  }
+
   async.parallel([
     removeTempDir,
     removeBuildDir
   ], function (err) {
     if (err) {
-      console.error(err);
+      return fail(err);
     }
-    complete(err);
+    complete();
   });
 }, {async: true});
 
-function createTempDir(callback) {
-  mkdirp(config.TMP_DIR, callback);
-}
-
-function createBuildDir(callback) {
-  //make path all the way to the HTML dir
-  mkdirp(config.HTML_DIR, callback);
-}
-
+/**
+ * Creates build directories
+ */
 task('scaffold', function () {
-  console.log('Scaffolding build directories...');
+  console.log('scaffolding build directories...');
+
+  function createTempDir(callback) {
+    mkdirp(config.TMP_DIR, callback);
+  }
+
+  function createBuildDir(callback) {
+    //make path all the way to the HTML dir
+    mkdirp(config.HTML_DIR, callback);
+  }
+
   async.parallel([
     createTempDir,
     createBuildDir
   ], function (err) {
     if (err) {
-      console.error(err);
+      return fail(err);
     }
-    complete(err);
+    complete();
   });
 }, {async: true});
 
@@ -62,7 +67,6 @@ var buildDeps = [
   'db:create',
   'archive',
   'feed:incversion',
-
   'version:commit'
 ];
 

@@ -7,29 +7,39 @@ var NO_VERSION = '0.0.0';
 
 var versions = [(fs.readFileSync(config.VERSION_FILE) || NO_VERSION).toString()];
 
-module.exports = Object.create({
+var api = module.exports = Object.create({
+  MAJOR: 'major',
+  PREMAJOR: 'premajor',
+  MINOR: 'minor',
+  PREMINOR: 'preminor',
+  PATCH: 'patch',
+  PREPATCH: 'prepatch',
+  PRERELEASE: 'prerelease',
+
   length: versions.length,
 
-  current: function (cb) {
-    cb(null, versions[0]);
+  current: function () {
+    return versions[0];
   },
 
-  previous: function (cb) {
-    cb(null, versions[1] || '');
+  previous: function () {
+    return versions[1] || '';
   },
 
-  inc: function (segment, cb) {
-    segment = segment || 'patch';
+  inc: function (release, cb) {
+    release = release || api.PATCH;
     var nextVersion, err;
     try {
-      nextVersion = semver.inc(this.current(), segment);
+      nextVersion = semver.inc(this.current(), release);
     } catch (e) {
+      console.error(e);
       err = e;
     }
     if (err) {
       return cb(err);
     }
     versions.unshift(nextVersion);
+    console.log(versions);
     this.length = versions.length;
     cb(null, nextVersion);
   },

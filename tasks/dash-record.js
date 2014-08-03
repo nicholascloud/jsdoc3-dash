@@ -1,6 +1,5 @@
 'use strict';
-var //sqlite3 = require('sqlite3').verbose(),
-  dashMap = require('./dash-map');
+var dashMap = require('./dash-map');
 
 var currentKey = 0;
 
