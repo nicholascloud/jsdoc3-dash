@@ -3,6 +3,6 @@ require('./fs-tasks');
 require('./git-tasks');
 require('./db-tasks');
 require('./build-tasks');
-require('./archive-tasks');
+require('./compress-tasks');
 require('./feed-tasks');
 require('./version-tasks');

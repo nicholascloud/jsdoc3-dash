@@ -34,7 +34,7 @@ namespace('feed', function () {
   /**
    * Increments the feed version and writes a new feed XML file
    */
-  task('incversion', ['feed:archive', 'version:increment'], function () {
+  task('incversion', ['version:increment', 'feed:archive'], function () {
     console.log('incrementing feed version...');
 
     var parser = new xml2js.Parser(),

@@ -39,7 +39,6 @@ var api = module.exports = Object.create({
       return cb(err);
     }
     versions.unshift(nextVersion);
-    console.log(versions);
     this.length = versions.length;
     cb(null, nextVersion);
   },

@@ -65,7 +65,7 @@ var buildDeps = [
   'fs:copy-readme',
   'fs:copy-json',
   'db:create',
-  'archive',
+  'compress',
   'feed:incversion',
   'version:commit'
 ];

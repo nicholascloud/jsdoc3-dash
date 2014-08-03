@@ -2,8 +2,8 @@
 var config = require('./config'),
   exec = require('child_process').exec;
 
-task('archive', function () {
-  console.log('archiving docset...');
+task('compress', function () {
+  console.log('compressing docset...');
 
   /*jshint quotmark:false*/
   var COMPRESS_CMD = "tar --exclude='.DS_Store' -cvzf " +
