@@ -11,7 +11,7 @@ var ICON16_NAME = 'icon.png';
 var ICON32_NAME = 'icon@2x.png';
 var ARCHIVE_NAME = 'jsdoc.tgz';
 var MASTER_HASH_FILE = path.join(ROOT, 'master.hash');
-var FEED_FILE = path.join(ROOT, 'feeds', 'jsdoc3.xml');
+var FEED_FILE = path.join(ROOT, 'feeds', 'JSDoc.xml');
 var VERSION_FILE = path.join(ROOT, 'version.semver');
 
 var TMP_DIR = path.join(ROOT, '.tmp');
@@ -33,7 +33,7 @@ var ICON16_SRC_PATH = path.join(ASSETS_DIR, ICON16_NAME);
 var ICON32_SRC_PATH = path.join(ASSETS_DIR, ICON32_NAME);
 var README_SRC_PATH = path.join(ASSETS_DIR, 'README.md');
 var JSON_SRC_PATH = path.join(ASSETS_DIR, 'docset.json');
-var FEED_SRC_PATH = path.join(ASSETS_DIR, 'jsdoc3.xml');
+var FEED_SRC_PATH = path.join(ASSETS_DIR, 'JSDoc.xml');
 
 //destination paths
 var PLIST_DEST_PATH = path.join(CONTENTS_DIR, PLIST_NAME);
@@ -43,7 +43,7 @@ var DB_DEST_PATH = path.join(RESOURCES_DIR, DB_NAME);
 var ARCHIVE_DEST_PATH = path.join(BUILD_DIR, ARCHIVE_NAME);
 var README_DEST_PATH = path.join(DOCSET_DIR, 'README.md');
 var JSON_DEST_PATH = path.join(DOCSET_DIR, 'docset.json');
-var FEED_DEST_PATH = path.join(FEED_DIR, 'jsdoc3.xml');
+var FEED_DEST_PATH = path.join(FEED_DIR, 'JSDoc.xml');
 
 module.exports = {
   REPO_URL: REPO_URL,
