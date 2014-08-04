@@ -4,12 +4,12 @@ var path = require('path');
 var ROOT = path.join(__dirname, '..');
 
 var REPO_URL = 'https://github.com/jsdoc3/jsdoc3.github.com.git';
-var DOCSET_NAME = 'jsdoc3.docset';
+var DOCSET_NAME = 'jsdoc.docset';
 var DB_NAME = 'docSet.dsidx';
 var PLIST_NAME = 'Info.plist';
 var ICON16_NAME = 'icon.png';
 var ICON32_NAME = 'icon@2x.png';
-var ARCHIVE_NAME = 'jsdoc3.tgz';
+var ARCHIVE_NAME = 'jsdoc.tgz';
 var MASTER_HASH_FILE = path.join(ROOT, 'master.hash');
 var FEED_FILE = path.join(ROOT, 'feeds', 'jsdoc3.xml');
 var VERSION_FILE = path.join(ROOT, 'version.semver');
@@ -19,12 +19,12 @@ var BUILD_DIR = path.join(ROOT, 'build');
 var ASSETS_DIR = path.join(ROOT, 'assets');
 
 //docset directory structure
-//jsdoc3.docset/Contents/Resources/Documents
+//jsdoc.docset/Contents/Resources/Documents
 var DOCSET_DIR = path.join(BUILD_DIR, DOCSET_NAME);
 var CONTENTS_DIR = path.join(DOCSET_DIR, 'Contents');
 var RESOURCES_DIR = path.join(CONTENTS_DIR, 'Resources');
 var DOCUMENTS_DIR = path.join(RESOURCES_DIR, 'Documents');
-var HTML_DIR = path.join(DOCUMENTS_DIR, 'jsdoc3');
+var HTML_DIR = path.join(DOCUMENTS_DIR, 'jsdoc');
 var FEED_DIR = path.join(ROOT, 'feeds');
 
 //source paths

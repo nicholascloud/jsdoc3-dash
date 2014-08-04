@@ -72,7 +72,7 @@ namespace('fs', function () {
       if (err) {
         return fail(err);
       }
-      complete()
+      complete();
     });
   }, {async: true});
 
@@ -136,9 +136,9 @@ namespace('fs', function () {
     }
 
     function writeJSON(json, cb) {
-      var err;
+      var err, content;
       try {
-        var content = JSON.stringify(json, null, '  ');
+        content = JSON.stringify(json, null, '  ');
       } catch (e) {
         err = e;
       }

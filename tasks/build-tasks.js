@@ -9,7 +9,7 @@ task('clean', function () {
   console.log('cleaning build artifacts...');
 
   function removeTempDir(callback) {
-    rimraf(config.BUILD_DIR, callback);
+    rimraf(config.DOCSET_DIR, callback);
   }
 
   function removeBuildDir(callback) {

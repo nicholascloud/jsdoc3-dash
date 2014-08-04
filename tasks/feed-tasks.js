@@ -1,40 +1,15 @@
 'use strict';
 var xml2js = require('xml2js'),
   fs = require('fs'),
-  path = require('path'),
   async = require('async'),
-  ncp = require('ncp').ncp,
   version = require('./version'),
   config = require('./config');
 
 namespace('feed', function () {
   /**
-   * Archives the existing feed file
-   */
-  task('archive', ['version:increment'], function () {
-    console.log('archiving feed...');
-
-    if (!fs.existsSync(config.FEED_DEST_PATH)) {
-      return complete();
-    }
-
-    var fileName = ['jsdoc3-', version.previous() || 'x.x.x', '.xml'].join('');
-    var archivePath = path.join(config.FEED_DIR, fileName);
-
-    console.info('  > writing', archivePath);
-
-    ncp(config.FEED_DEST_PATH, archivePath, function (err) {
-      if (err) {
-        return fail(err);
-      }
-      complete();
-    });
-  }, {async: true});
-
-  /**
    * Increments the feed version and writes a new feed XML file
    */
-  task('incversion', ['version:increment', 'feed:archive'], function () {
+  task('incversion', ['version:increment'], function () {
     console.log('incrementing feed version...');
 
     var parser = new xml2js.Parser(),
