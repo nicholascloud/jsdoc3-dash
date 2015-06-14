@@ -2,7 +2,9 @@
 var exec = require('child_process').exec,
   config = require('./config'),
   async = require('async'),
-  fs = require('fs');
+  fs = require('fs'),
+  semver = require('semver'),
+  EOL = require('os').EOL;
 
 namespace('git', function () {
   /**
@@ -21,16 +23,26 @@ namespace('git', function () {
   }, {async: true});
 
   /**
-   * Checks to see if the master branch has been updated since last build
-   * TODO: change this to use release tags if made available
-   * SEE: https://github.com/jsdoc3/jsdoc3.github.com/issues/59
+   * Checks out the current working version
    */
+  task('checkout', {async: true}, function () {
+    var CHECKOUT_CMD = 'git checkout %1'.replace('%1', config.WORKING_VERSION);
+    console.log('Checking out latest version...');
+    console.log('  >', CHECKOUT_CMD);
+    exec(CHECKOUT_CMD, {cwd: config.TMP_DIR}, function (err) {
+      if (err) {
+        return fail(err);
+      }
+      complete();
+    });
+  });
+
   task('check', {async: true}, function () {
-    var REMOTE_HASH_CMD = 'git ls-remote %1 | awk \'/master/ {print $1}\'';
+    var REMOTE_TAG_CMD = "git ls-remote --tags %1 | awk '/[0-9]$/ {print $2}'";
     console.log('Comparing latest hashes...');
 
-    function fetchLastHash(cb) {
-      fs.readFile(config.MASTER_HASH_FILE, function (err, buffer) {
+    function fetchLastVersion(cb) {
+      fs.readFile(config.VERSION_FILE, function (err, buffer) {
         if (err) {
           console.warn(err);
         }
@@ -39,17 +51,33 @@ namespace('git', function () {
       });
     }
 
-    function fetchLatestHash(cb) {
-      var cmd = REMOTE_HASH_CMD.replace('%1', config.REPO_URL);
+    function fetchLatestTag(cb) {
+      var cmd = REMOTE_TAG_CMD.replace('%1', config.REPO_URL);
       console.log('  >', cmd);
       exec(cmd, function (err, stdout/*, stderr*/) {
-        cb(err, (stdout || '').toString());
+        if (err) return cb(err);
+        var tagRefs = (stdout || '').toString().trim();
+        if (!tagRefs) {
+          return cb(new Error('no tag refs found in git:check::fetchLatestTag()'));
+        }
+        // extract tags from refs
+        var tags = tagRefs.split(EOL).map(function (ref) {
+          var refIndex = ref.lastIndexOf('/') + 1;
+          var refLength = ref.length - refIndex;
+          return ref.substr(refIndex, refLength);
+        });
+        console.log(tags);
+        // sort by semver, asc
+        tags = tags.sort(semver.compare);
+        // get the latest tag
+        var latestTag = tags.pop();
+        cb(err, latestTag);
       });
     }
 
     async.parallel([
-      fetchLastHash,
-      fetchLatestHash
+      fetchLastVersion,
+      fetchLatestTag
     ], function (err, results) {
       if (err) {
         return fail(err);
@@ -57,17 +85,18 @@ namespace('git', function () {
       var last = results[0], latest = results[1];
       console.log('  > last: %s, latest: %s', (last || '(none)'), latest);
 
-      if (last === latest) {
+      if (semver.eq(last, latest)) {
         return fail('  > already have latest jsdoc3 build', 0);
       }
 
-      console.log('  > updating master hash file...');
-      fs.writeFile(config.MASTER_HASH_FILE, latest, function (err) {
-        if (err) {
-          return fail(err);
-        }
-        complete();
-      });
+      if (semver.gt(last, latest)) {
+        return fail('  > got previous version %s'.replace('%s', latest), 0);
+      }
+
+      console.log('  > using working version %s...', latest);
+      config.WORKING_VERSION = latest;
+
+      complete();
     });
 
   }, {async: true});

@@ -2,14 +2,13 @@
 var xml2js = require('xml2js'),
   fs = require('fs'),
   async = require('async'),
-  version = require('./version'),
   config = require('./config');
 
 namespace('feed', function () {
   /**
    * Increments the feed version and writes a new feed XML file
    */
-  task('incversion', ['version:increment'], function () {
+  task('version', function () {
     console.log('incrementing feed version...');
 
     var parser = new xml2js.Parser(),
@@ -66,7 +65,7 @@ namespace('feed', function () {
     function incVersion(json, cb) {
       var err;
       try {
-        json.entry.version[0] = version.current();
+        json.entry.version[0] = config.WORKING_VERSION;
       } catch (e) {
         err = e;
       }

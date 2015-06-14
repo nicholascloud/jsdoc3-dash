@@ -58,7 +58,7 @@ var buildDeps = [
   'clean',
   'scaffold',
   'git:clone',
-  'version:increment',
+  'git:checkout',
   'fs:copy-docset',
   'fs:copy-plist',
   'fs:copy-icon',
@@ -66,7 +66,7 @@ var buildDeps = [
   'fs:copy-json',
   'db:create',
   'compress',
-  'feed:incversion',
+  'feed:version',
   'version:commit'
 ];
 

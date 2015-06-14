@@ -4,7 +4,6 @@ var fs = require('fs'),
   os = require('os'),
   ncp = require('ncp').ncp,
   async = require('async'),
-  version = require('./version'),
   config = require('./config');
 
 namespace('fs', function () {
@@ -116,7 +115,7 @@ namespace('fs', function () {
   /**
    * Copy the docset JSON file to build output
    */
-  task('copy-json', ['version:increment'], function () {
+  task('copy-json', function () {
     console.log('copying docset json...');
 
     function readJSON(cb) {
@@ -154,7 +153,7 @@ namespace('fs', function () {
     }
 
     function versionJSON(json, cb) {
-      json.version = version.current();
+      json.version = config.WORKING_VERSION;
       cb(null, json);
     }
 

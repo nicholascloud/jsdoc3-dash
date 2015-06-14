@@ -1,5 +1,6 @@
 'use strict';
-var path = require('path');
+var path = require('path'),
+  fs = require('fs');
 
 var ROOT = path.join(__dirname, '..');
 
@@ -10,7 +11,6 @@ var PLIST_NAME = 'Info.plist';
 var ICON16_NAME = 'icon.png';
 var ICON32_NAME = 'icon@2x.png';
 var ARCHIVE_NAME = 'JSDoc.tgz';
-var MASTER_HASH_FILE = path.join(ROOT, 'master.hash');
 var FEED_FILE = path.join(ROOT, 'feeds', 'JSDoc.xml');
 var VERSION_FILE = path.join(ROOT, 'version.semver');
 
@@ -46,8 +46,9 @@ var JSON_DEST_PATH = path.join(DOCSET_DIR, 'docset.json');
 var FEED_DEST_PATH = path.join(FEED_DIR, 'JSDoc.xml');
 
 module.exports = {
+  WORKING_VERSION: fs.readFileSync(VERSION_FILE).toString().trim(),
+
   REPO_URL: REPO_URL,
-  MASTER_HASH_FILE: MASTER_HASH_FILE,
   VERSION_FILE: VERSION_FILE,
   FEED_FILE: FEED_FILE,
 
