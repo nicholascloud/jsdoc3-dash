@@ -1,25 +1,25 @@
 'use strict';
-var dashMap = require('./dash-map');
+const dashMap = require('./dash-map');
 
-var currentKey = 0;
+let currentKey = 0;
 
-function toRecordType(fileName) {
-  var fileType = fileName.substring(0, fileName.indexOf('-'));
+const toRecordType = function (fileName) {
+  const fileType = fileName.substring(0, fileName.indexOf('-'));
   return dashMap.resolve(fileType);
-}
+};
 
-function toEntityName(fileName) {
-  var name = fileName.substring(
+const toEntityName = function (fileName) {
+  const name = fileName.substring(
     fileName.indexOf('-') + 1,
     fileName.lastIndexOf('.')
   ).replace('-', ' ');
-  var segments = name.split(' ');
+  const segments = name.split(' ');
   return segments.reduce(function (previous, current) {
     current = current.charAt(0).toUpperCase() +
       current.substr(1);
     return previous + ' ' + current;
   }, '');
-}
+};
 
 function DashRecord(relativePath, fileName) {
   relativePath = relativePath || '';

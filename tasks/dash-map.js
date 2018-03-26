@@ -1,5 +1,5 @@
 'use strict';
-var dashMap = {
+const dashMap = {
   about: 'Guide',
   howto: 'Guide',
   plugins: 'Guide',
@@ -7,7 +7,7 @@ var dashMap = {
   index: 'Guide'
 };
 
-var DEFAULT_TYPE = 'Guide';
+const DEFAULT_TYPE = 'Guide';
 
 module.exports = {
   /**

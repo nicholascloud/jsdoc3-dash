@@ -1,6 +1,6 @@
 'use strict';
-var fs = require('fs'),
-  config = require('./config');
+const fs = require('fs');
+const config = require('./config');
 
 namespace('version', function () {
 
@@ -10,7 +10,9 @@ namespace('version', function () {
   task('commit', function () {
     console.log('committing version...');
     fs.writeFile(config.VERSION_FILE, config.WORKING_VERSION, function (err) {
-      if (err) return fail(err);
+      if (err) {
+        return fail(err);
+      }
       complete();
     });
   }, {async: true});

@@ -1,22 +1,28 @@
 {
   "name": "jsdoc3-dash",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "author": "Nicholas Cloud",
   "repository": {
     "type": "git",
     "url": "https://github.com/nicholascloud/jsdoc3-dash"
   },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 9.6.0"
+  },
   "dependencies": {
-    "async": "^0.2.10",
-    "mkdirp": "^0.3.5",
-    "ncp": "^0.4.2",
-    "rimraf": "^2.4.0",
-    "semver": "^3.0.1",
-    "sqlite3": "^3.1.9",
-    "xml2js": "^0.4.9"
+    "async": "2.6.0",
+    "jake": "8.0.16",
+    "mkdirp": "0.5.1",
+    "ncp": "2.0.0",
+    "rimraf": "2.6.2",
+    "semver": "5.5.0",
+    "sqlite3": "4.0.0",
+    "xml2js": "0.4.19"
   },
   "devDependencies": {
-    "jake": "latest"
+    "eslint": "4.19.1",
+    "jake": "8.0.16"
   },
   "scripts": {
     "start": "node_modules/.bin/jake build"

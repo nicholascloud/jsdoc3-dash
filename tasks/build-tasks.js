@@ -1,20 +1,20 @@
 'use strict';
-var config = require('./config'),
-  async = require('async'),
-  rimraf = require('rimraf'),
-  mkdirp = require('mkdirp');
+const config = require('./config');
+const async = require('async');
+const rimraf = require('rimraf');
+const mkdirp = require('mkdirp');
 
 desc('cleans build output');
 task('clean', function () {
   console.log('cleaning build artifacts...');
 
-  function removeTempDir(callback) {
+  const removeTempDir = function (callback) {
     rimraf(config.DOCSET_DIR, callback);
-  }
+  };
 
-  function removeBuildDir(callback) {
+  const removeBuildDir = function (callback) {
     rimraf(config.TMP_DIR, callback);
-  }
+  };
 
   async.parallel([
     removeTempDir,
@@ -33,14 +33,14 @@ task('clean', function () {
 task('scaffold', function () {
   console.log('scaffolding build directories...');
 
-  function createTempDir(callback) {
+  const createTempDir = function (callback) {
     mkdirp(config.TMP_DIR, callback);
-  }
+  };
 
-  function createBuildDir(callback) {
+  const createBuildDir = function (callback) {
     //make path all the way to the HTML dir
     mkdirp(config.HTML_DIR, callback);
-  }
+  };
 
   async.parallel([
     createTempDir,
@@ -53,7 +53,7 @@ task('scaffold', function () {
   });
 }, {async: true});
 
-var buildDeps = [
+const buildDeps = [
   'git:check',
   'clean',
   'scaffold',

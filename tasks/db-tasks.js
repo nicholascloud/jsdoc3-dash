@@ -1,11 +1,11 @@
 'use strict';
-var sqlite3 = require('sqlite3').verbose(),
-  rimraf = require('rimraf'),
-  async = require('async'),
-  fs = require('fs'),
-  path = require('path'),
-  DashRecord = require('./dash-record'),
-  config = require('./config');
+const sqlite3 = require('sqlite3').verbose();
+const rimraf = require('rimraf');
+const async = require('async');
+const fs = require('fs');
+const path = require('path');
+const DashRecord = require('./dash-record');
+const config = require('./config');
 
 namespace('db', function () {
   /**
@@ -28,48 +28,48 @@ namespace('db', function () {
   task('create', ['db:clean'], function () {
     console.log('creating database...');
 
-    var INSERT_QUERY = 'INSERT INTO searchIndex (id, name, type, path) VALUES (?, ?, ?, ?)';
+    const INSERT_QUERY = 'INSERT INTO searchIndex (id, name, type, path) VALUES (?, ?, ?, ?)';
 
-    function openConnection(callback) {
+    const openConnection = function (callback) {
       console.log('  > opening connection...');
-      var db = new sqlite3.Database(config.DB_DEST_PATH, function (err) {
+      const db = new sqlite3.Database(config.DB_DEST_PATH, function (err) {
         return callback(err, db);
       });
-    }
+    };
 
-    function createTable(db, callback) {
+    const createTable = function (db, callback) {
       console.log('  > creating table...');
       db.run('CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT)', function (err) {
         callback(err, db);
       });
-    }
+    };
 
-    function _isHtmlFile(file) {
+    const _isHtmlFile = function (file) {
       return (/.*\.html$/ig).test(file);
-    }
+    };
 
-    function _makeDashRecord(file) {
-      var relativePath = path.relative(config.DOCUMENTS_DIR, path.join(config.HTML_DIR, file));
+    const _makeDashRecord = function (file) {
+      const relativePath = path.relative(config.DOCUMENTS_DIR, path.join(config.HTML_DIR, file));
       return new DashRecord(relativePath, file);
-    }
+    };
 
-    function createRecords(db, callback) {
+    const createRecords = function (db, callback) {
       console.log('  > creating records...');
-      var dashRecords = [];
+      let dashRecords = [];
       fs.readdir(config.HTML_DIR, function (err, files) {
         if (err) {
           return callback(err);
         }
-        var htmlFiles = files.filter(_isHtmlFile);
+        const htmlFiles = files.filter(_isHtmlFile);
         dashRecords = htmlFiles.map(_makeDashRecord);
         return callback(null, db, dashRecords);
       });
-    }
+    };
 
-    function writeRecords(db, dashRecords, callback) {
+    const writeRecords = function (db, dashRecords, callback) {
       console.log('  > writing records...', dashRecords.length);
 
-      var inserts = [];
+      const inserts = [];
       dashRecords.map(function (record) {
         return record.toJSON();
       }).forEach(function (json) {
@@ -81,7 +81,7 @@ namespace('db', function () {
       async.series(inserts, function (err) {
         callback(err, db);
       });
-    }
+    };
 
     async.waterfall([
       openConnection,

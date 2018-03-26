@@ -1,10 +1,10 @@
 'use strict';
-var fs = require('fs'),
-  path = require('path'),
-  os = require('os'),
-  ncp = require('ncp').ncp,
-  async = require('async'),
-  config = require('./config');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+const ncp = require('ncp').ncp;
+const async = require('async');
+const config = require('./config');
 
 namespace('fs', function () {
   /**
@@ -13,28 +13,28 @@ namespace('fs', function () {
   task('copy-docset', function () {
     console.log('copying docset files...');
 
-    var copyFilters = [
+    const copyFilters = [
       /.+\.html$/,
       /.*lib$/,
       /.*styles$/
     ];
 
-    function includeInDocset(file) {
+    const includeInDocset = function (file) {
       return copyFilters.some(function (filter) {
         return filter.test(file);
       });
-    }
+    };
 
-    function src(file) {
+    const src = function (file) {
       return path.join(config.TMP_DIR, file);
-    }
+    };
 
-    function dest(file) {
+    const dest = function (file) {
       return path.join(config.HTML_DIR, file);
-    }
+    };
 
-    function copyDocsetFiles(files, callback) {
-      var errors = [];
+    const copyDocsetFiles = function (files, callback) {
+      const errors = [];
       files.forEach(function (file) {
         ncp(src(file), dest(file), function (err) {
           errors.push(err);
@@ -44,14 +44,14 @@ namespace('fs', function () {
         return callback(errors.join(os.EOL));
       }
       return callback(null);
-    }
+    };
 
     fs.readdir(config.TMP_DIR, function (err, files) {
       if (err) {
         return complete(err);
       }
 
-      var docsetFiles = files.filter(includeInDocset);
+      const docsetFiles = files.filter(includeInDocset);
 
       copyDocsetFiles(docsetFiles, function (err) {
         if (err) {
@@ -81,12 +81,12 @@ namespace('fs', function () {
   task('copy-icon', function () {
     console.log('copying icon file...');
 
-    function copyIcon(src, dest) {
+    const copyIcon = function (src, dest) {
       return function (cb) {
         console.info('  > copying', src, dest);
         ncp(src, dest, cb);
       };
-    }
+    };
 
     async.parallel([
       copyIcon(config.ICON16_SRC_PATH, config.ICON16_DEST_PATH),
@@ -118,13 +118,13 @@ namespace('fs', function () {
   task('copy-json', function () {
     console.log('copying docset json...');
 
-    function readJSON(cb) {
+    const readJSON = function (cb) {
       console.info('  > reading', config.JSON_SRC_PATH);
       fs.readFile(config.JSON_SRC_PATH, function (err, buffer) {
         if (err) {
           return cb(err);
         }
-        var json;
+        let json;
         try {
           json = JSON.parse(buffer.toString());
         } catch (e) {
@@ -132,10 +132,10 @@ namespace('fs', function () {
         }
         cb(err, json);
       });
-    }
+    };
 
-    function writeJSON(json, cb) {
-      var err, content;
+    const writeJSON = function (json, cb) {
+      let err, content;
       try {
         content = JSON.stringify(json, null, '  ');
       } catch (e) {
@@ -150,12 +150,12 @@ namespace('fs', function () {
       fs.writeFile(config.JSON_DEST_PATH, content, function (err) {
         cb(err);
       });
-    }
+    };
 
-    function versionJSON(json, cb) {
+    const versionJSON = function (json, cb) {
       json.version = config.WORKING_VERSION;
       cb(null, json);
-    }
+    };
 
     async.waterfall([
       readJSON,

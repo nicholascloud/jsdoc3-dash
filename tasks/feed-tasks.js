@@ -1,8 +1,8 @@
 'use strict';
-var xml2js = require('xml2js'),
-  fs = require('fs'),
-  async = require('async'),
-  config = require('./config');
+const xml2js = require('xml2js');
+const fs = require('fs');
+const async = require('async');
+const config = require('./config');
 
 namespace('feed', function () {
   /**
@@ -11,10 +11,10 @@ namespace('feed', function () {
   task('version', function () {
     console.log('incrementing feed version...');
 
-    var parser = new xml2js.Parser(),
-      builder = new xml2js.Builder();
+    const parser = new xml2js.Parser();
+    const builder = new xml2js.Builder();
 
-    function readFeed(cb) {
+    const readFeed = function (cb) {
       /*
        { entry:
        { version: [ 'x.y.z' ],
@@ -35,9 +35,9 @@ namespace('feed', function () {
           cb(null, json);
         });
       });
-    }
+    };
 
-    function writeFeed(json, cb) {
+    const writeFeed = function (json, cb) {
       /*
        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
        <entry>
@@ -45,7 +45,7 @@ namespace('feed', function () {
        <url>https://raw.github.com/nicholascloud/jsdoc3-dash/master/build/jsdoc3.tgz</url>
        </entry>
        */
-      var xml, err;
+      let xml, err;
       try {
         xml = builder.buildObject(json);
       } catch (e) {
@@ -60,17 +60,17 @@ namespace('feed', function () {
       fs.writeFile(config.FEED_DEST_PATH, xml, function (err) {
         cb(err);
       });
-    }
+    };
 
-    function incVersion(json, cb) {
-      var err;
+    const incVersion = function (json, cb) {
+      let err;
       try {
         json.entry.version[0] = config.WORKING_VERSION;
       } catch (e) {
         err = e;
       }
       cb(err, json);
-    }
+    };
 
     async.waterfall([
       readFeed,
